@@ -74,6 +74,7 @@ class Context
     protected $component_js = [];
 
     public static $component_mappings = [
+        'amp-ad' => 'https://cdn.ampproject.org/v0/amp-ad-0.1.js',
         'amp-analytics' => 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js',
         'amp-anim' => 'https://cdn.ampproject.org/v0/amp-anim-0.1.js',
         'amp-audio' => 'https://cdn.ampproject.org/v0/amp-audio-0.1.js',
@@ -83,6 +84,7 @@ class Context
         'amp-facebook' => 'https://cdn.ampproject.org/v0/amp-facebook-0.1.js',
         'amp-fit-text' => 'https://cdn.ampproject.org/v0/amp-fit-text-0.1.js',
         'amp-font' => 'https://cdn.ampproject.org/v0/amp-font-0.1.js',
+        'amp-hulu' => 'https://cdn.ampproject.org/v0/amp-hulu-0.1.js',
         'amp-iframe' => 'https://cdn.ampproject.org/v0/amp-iframe-0.1.js',
         'amp-instagram' => 'https://cdn.ampproject.org/v0/amp-instagram-0.1.js',
         'amp-install-serviceworker' => 'https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js',
@@ -96,6 +98,7 @@ class Context
         'amp-vine' => 'https://cdn.ampproject.org/v0/amp-vine-0.1.js',
         'amp-vimeo' => 'https://cdn.ampproject.org/v0/amp-vimeo-0.1.js',
         'amp-youtube' => 'https://cdn.ampproject.org/v0/amp-youtube-0.1.js',
+        'amp-sidebar' => 'https://cdn.ampproject.org/v0/amp-sidebar-0.1.js',
         'template' => 'https://cdn.ampproject.org/v0/amp-mustache-0.1.js'
     ];
 
@@ -451,7 +454,7 @@ class Context
     public function addErrorWithLine($line, $validation_error_code, array $params, $spec_url, SValidationResult $validation_result, $attr_name = '', $segment = '')
     {
         // We currently don't issue this error as we're only looking at DOMElements
-        if ($validation_error_code == ValidationErrorCode::MANDATORY_TAG_MISSING && isset($params[0]) && $params[0] == 'html doctype') {
+        if ($validation_error_code == ValidationErrorCode::MANDATORY_TAG_MISSING && isset($params[0]) && in_array($params[0], ['html doctype', 'html \u26a14ads for top-level html', 'amp4ads engine amp4ads-v0.js script'])) {
             return true;
         }
 
